@@ -1,4 +1,4 @@
-<!doctype html>
+ת<!doctype html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -259,6 +259,9 @@ html,body{margin:0;height:100%;overflow:hidden;background:#EEF4F6;font-family:'A
 .list .row,.panel.light .row.white{flex:1 1 0;font-size:26px;padding:0 20px;gap:18px}
 .list .row .ic,.panel.light .row.white .ic{width:54px;height:54px}
 .list .row .ic svg,.panel.light .row.white .ic svg{width:26px;height:26px}
+.svlink{display:flex;align-items:center;gap:14px;margin-top:10px;font-size:24px;color:var(--muted);font-weight:600}
+.svlink a{background:var(--orange);color:var(--ink);text-decoration:none;font-weight:700;font-size:22px;padding:9px 22px;border-radius:999px}
+.svlink .copy{margin-top:0;font-size:19px;padding:8px 18px}
 .store.doc{margin-top:16px;background:var(--orange);color:var(--ink)}
 </style>
 </head>
@@ -375,7 +378,7 @@ let svMode='q';
 function svInit(){svMode='q';document.querySelectorAll('.svtabs button').forEach(b=>b.onclick=()=>{svMode=b.dataset.sv;document.querySelectorAll('.svtabs button').forEach(x=>x.classList.toggle('on',x===b));svRender()});svRender()}
 function svRender(){
   const box=document.getElementById('svBody'); if(!box) return; clearInterval(window._sv);
-  if(svMode==='q'){box.innerHTML='<div class="qrw"><div class="q" id="qr"></div><ol><li>סרקו את הקוד בטלפון</li><li>ענו על השאלות</li><li>נראה את התוצאות יחד</li></ol></div>';new QRCode(document.getElementById('qr'),{text:SURVEY.form,width:360,height:360,colorDark:'#0B4F7C'});return}
+  if(svMode==='q'){box.innerHTML='<div class="qrw"><div class="q" id="qr"></div><div><ol><li>סרקו את הקוד בטלפון</li><li>ענו על השאלות</li><li>נראה את התוצאות יחד</li></ol><div class="svlink"><span>או בקישור:</span><a href="'+SURVEY.form+'" target="_blank" rel="noopener">פתיחת הסקר</a><button class="copy" id="svCopy">העתקת הקישור</button></div></div></div>';new QRCode(document.getElementById('qr'),{text:SURVEY.form,width:360,height:360,colorDark:'#0B4F7C'});document.getElementById('svCopy').onclick=e=>navigator.clipboard.writeText(SURVEY.form).then(()=>{e.target.textContent='הועתק';setTimeout(()=>e.target.textContent='העתקת הקישור',1500)});return}
   box.innerHTML='<div class="muted">טוען תוצאות...</div>'; svResults(); window._sv=setInterval(svResults,5000);
 }
 function svResults(){
